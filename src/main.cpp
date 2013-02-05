@@ -3,10 +3,22 @@
 #include <subgine/collision.hpp>
 
 #include "mainwindow.h"
+#include "circlesboxviewmanager.h"
+#include "circlesboxcontextmanager.h"
 
 int main(int argc, char **argv)
 {
     MainWindow myWindow;
+	CirclesBoxViewManager viewManager;
+	CirclesBoxContextManager contextManager;
+	
+	
+	myWindow.setViewManager(viewManager);
+	contextManager.setViewManager(viewManager);
+	
+	myWindow.Create(sf::VideoMode(800, 600, 32), "SFML Window");
+	
+	
 	
 	while (myWindow.IsOpened())
     {

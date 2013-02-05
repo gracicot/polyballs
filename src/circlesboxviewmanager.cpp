@@ -15,9 +15,9 @@ CirclesBoxViewManager::~CirclesBoxViewManager()
 void CirclesBoxViewManager::render(sf::RenderTarget& taget) const
 {
 	taget.Draw(*_box);
-	for(auto& cicle : _circles)
+	for(auto cicle : _circles)
 	{
-		taget.Draw(cicle);
+		taget.Draw(*cicle);
 	}
 }
 

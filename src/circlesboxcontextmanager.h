@@ -3,15 +3,24 @@
 
 #include "contextmanager.h"
 
+class Box;
 class CircleObject;
 
 class CirclesBoxContextManager : public ContextManager
 {
 public:
+    CirclesBoxContextManager();
+    virtual ~CirclesBoxContextManager();
 	
+	void addCicle(CircleObject& cicle);
+	void removeCicle(CircleObject& cicle);
+	
+	void setBox(Box& box);
+	Box& getBox();
 	
 private:
-	std::vector<CircleObject*> _circles;
+	Box* _box;
+	std::list<CircleObject*> _circles;
 };
 
 #endif // CIRCLESBOXCONTEXTMANAGER_H

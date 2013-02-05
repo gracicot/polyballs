@@ -7,6 +7,7 @@
 
 class CircleDrawer : public Drawable, virtual public Traits::Position
 {
+public:
     CircleDrawer() = default;
     ~CircleDrawer() = default;
     virtual void Render(sf::RenderTarget& Target) const;

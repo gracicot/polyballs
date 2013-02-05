@@ -25,3 +25,14 @@ BoxDrawer::~BoxDrawer()
 
 }
 
+Vector2 BoxDrawer::getDimensions() const
+{
+	return _dimensions;
+}
+
+void BoxDrawer::setDimensions(Vector2 dimensions)
+{
+	_dimensions = dimensions;
+}
+
+

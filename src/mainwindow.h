@@ -9,8 +9,15 @@
 class MainWindow : public sf::RenderWindow
 {
 public:
-	void render(ViewManager& vm);
-	void handleEvents(ContextManager& cm);
+    MainWindow();
+    virtual ~MainWindow();
+	
+	void render();
+	
+	void setViewManager(ViewManager& viewmanager);
+	
+private:
+	ViewManager* _viewManager;
 	
 };
 

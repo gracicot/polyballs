@@ -16,8 +16,6 @@ public:
 	
 protected:
 	MainEngine _engines;
-	
-private:
 	ViewManager* _viewManager;
 };
 

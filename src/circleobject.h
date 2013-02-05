@@ -8,6 +8,7 @@
 
 class CircleObject : public PhysicPoint, public Collisionnable::Circle, public CircleDrawer
 {
+public:
     CircleObject() = default;
     ~CircleObject() = default;
 };

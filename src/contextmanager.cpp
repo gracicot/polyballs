@@ -22,5 +22,5 @@ ViewManager& ContextManager::getViewManager()
 
 void ContextManager::setViewManager(ViewManager& viewManager)
 {
-	_viewManager = viewManager;
+	_viewManager = &viewManager;
 }

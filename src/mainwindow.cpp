@@ -1,11 +1,21 @@
 #include "mainwindow.h"
 
-void MainWindow::handleEvents(ContextManager& cm)
+MainWindow::MainWindow(): _viewManager(nullptr)
 {
-
+	
 }
 
-void MainWindow::render(ViewManager& vm)
+MainWindow::~MainWindow()
 {
+	
+}
 
+void MainWindow::render()
+{
+	_viewManager->render(*this);
+}
+
+void MainWindow::setViewManager(ViewManager& viewmanager)
+{
+	_viewManager = &viewmanager;
 }
