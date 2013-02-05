@@ -8,13 +8,14 @@ void BoxDrawer::Render(sf::RenderTarget& Target) const
 	
 	glPushMatrix();
 	
+	glTranslatef(_position.x, _position.y, 0);
 	glRotatef(radian_to_degree(_angle),0,0,1);
 	glBegin(getDrawMode());
 	{
-		glVertex2d(_position.x - (_dimensions.x/2), _position.y - (_dimensions.y/2));
-		glVertex2d(_position.x + (_dimensions.x/2), _position.y - (_dimensions.y/2));
-		glVertex2d(_position.x + (_dimensions.x/2), _position.y + (_dimensions.y/2));
-		glVertex2d(_position.x - (_dimensions.x/2), _position.y + (_dimensions.y/2));
+		glVertex2d(-_dimensions.x/2, -_dimensions.y/2);
+		glVertex2d(_dimensions.x/2, -_dimensions.y/2);
+		glVertex2d(_dimensions.x/2,_dimensions.y/2);
+		glVertex2d(-_dimensions.x/2, _dimensions.y/2);
 	}glEnd();
 	
 	glPopMatrix();

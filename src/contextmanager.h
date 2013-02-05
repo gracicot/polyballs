@@ -3,13 +3,13 @@
 
 #include "viewmanager.h"
 
-class ContextManager
+class ContextManager : public Engine
 {
 public:
 	ContextManager();
 	virtual ~ContextManager();
 	
-	void setViewManager(ViewManager& viewManager);
+	virtual void setViewManager(ViewManager& viewManager);
 	
 	const ViewManager& getViewManager() const;
 	ViewManager& getViewManager();

@@ -3,16 +3,22 @@
 void CircleDrawer::Render(sf::RenderTarget& Target) const
 {
     glColor4ub(_color.r, _color.g, _color.b, _color.a);
-    glBegin(getDrawMode());
+    
+	glPushMatrix();
+	glTranslatef(_position.x, _position.y, 0);
+	
+	glBegin(getDrawMode());
     {
         double angle;
-        for(int i=0 ; i<int(_radius/2) ; i++)
+        for(int i=0 ; i<int(sqrt(_radius*15)) ; i++)
         {
-			angle = 2 * pi * i / int(_radius/2);
-            glVertex2d(_position.x + (cos(angle) * _radius), _position.y + (sin(angle) * _radius));
+			angle = 2 * pi * i / int(sqrt(_radius*10));
+            glVertex2d((cos(angle) * _radius), (sin(angle) * _radius));
         }
     }
     glEnd();
+	
+	glPopMatrix();
 }
 
 sf::Color CircleDrawer::getColor() const

@@ -2,7 +2,8 @@
 
 MainWindow::MainWindow(): _viewManager(nullptr)
 {
-	
+	SetFramerateLimit(61);
+	UseVerticalSync(true);
 }
 
 MainWindow::~MainWindow()

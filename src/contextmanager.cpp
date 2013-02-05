@@ -2,7 +2,7 @@
 
 ContextManager::ContextManager() : _viewManager(nullptr)
 {
-
+	_engines.addEngine("context manager", this);
 }
 
 ContextManager::~ContextManager()

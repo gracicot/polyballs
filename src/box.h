@@ -14,6 +14,9 @@ public:
     virtual ~Box();
 	
     virtual void setDimensions(Vector2 dimensions);
+	void setPosition(Vector2 position);
+	void setAngle(double angle);
+	double getAngle() const;
 	
 protected:
 	
