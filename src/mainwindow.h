@@ -12,7 +12,6 @@ public:
 	void render(ViewManager& vm);
 	void handleEvents(ContextManager& cm);
 	
-private:
 };
 
 #endif // MAINWINDOW_H

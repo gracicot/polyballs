@@ -3,12 +3,22 @@
 
 #include "viewmanager.h"
 
+class BoxDrawer;
+
 class CirclesBoxViewManager : public ViewManager
 {
+public:
+	void render(sf::RenderTarget& taget) const;
+	
+	void addCicle(const CircleDrawer& cicle);
+	void removeCicle(const CircleDrawer& cicle);
+	
+	void setBox(BoxDrawer& box);
+	BoxDrawer& getBox();
 	
 private:
-	std::vector<CircleDrawer*> _circles;
-	
+	std::list<const CircleDrawer*> _circles;
+	BoxDrawer* _box;
 };
 
 #endif // CIRCLESBOXVIEWMANAGER_H
