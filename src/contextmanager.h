@@ -2,12 +2,22 @@
 #define CONTEXTMANAGER_H
 
 #include "viewmanager.h"
-#include "circleobject.h"
 
 class ContextManager
 {
+public:
+	ContextManager();
+	virtual ~ContextManager();
+	
+	void setViewManager(ViewManager& viewManager);
+	
+	const ViewManager& getViewManager() const;
+	ViewManager& getViewManager();
+	
+protected:
+	MainEngine _engines;
+	
 private:
-	std::vector<CircleObject*> _circles;
 	ViewManager* _viewManager;
 };
 

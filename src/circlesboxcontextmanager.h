@@ -3,6 +3,8 @@
 
 #include "contextmanager.h"
 
+class CircleObject;
+
 class CirclesBoxContextManager : public ContextManager
 {
 public:

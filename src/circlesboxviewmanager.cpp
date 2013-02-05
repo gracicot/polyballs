@@ -2,6 +2,16 @@
 
 #include "boxdrawer.h"
 
+CirclesBoxViewManager::CirclesBoxViewManager() : _box(nullptr)
+{
+
+}
+
+CirclesBoxViewManager::~CirclesBoxViewManager()
+{
+
+}
+
 void CirclesBoxViewManager::render(sf::RenderTarget& taget) const
 {
 	taget.Draw(*_box);

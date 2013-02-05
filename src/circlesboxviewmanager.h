@@ -8,6 +8,9 @@ class BoxDrawer;
 class CirclesBoxViewManager : public ViewManager
 {
 public:
+    CirclesBoxViewManager();
+    virtual ~CirclesBoxViewManager();
+	
 	void render(sf::RenderTarget& taget) const;
 	
 	void addCicle(const CircleDrawer& cicle);
