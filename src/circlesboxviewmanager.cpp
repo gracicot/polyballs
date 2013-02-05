@@ -1,0 +1,2 @@
+#include "circlesboxviewmanager.h"
+
