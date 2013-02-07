@@ -3,6 +3,7 @@
 
 #include "contextmanager.h"
 #include "box.h"
+#include "circlesboxeventmanager.h"
 
 class CircleObject;
 
@@ -21,9 +22,17 @@ public:
 	
 	Box& getBox();
 	
+	void createTempCircle(Vector2 position);
+	void applyTempCircle();
+	void setTempCircleRadiusByPoint(Vector2 position);
+	
 private:
+	CirclesBoxEventManager _eventManager;
+	
 	Box _box;
 	std::list<CircleObject*> _circles;
+	
+	CircleObject* _tempCircle;
 };
 
 #endif // CIRCLESBOXCONTEXTMANAGER_H

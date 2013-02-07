@@ -5,7 +5,7 @@
 #include "box.h"
 #include "bounceinner.h"
 
-CirclesBoxContextManager::CirclesBoxContextManager()
+CirclesBoxContextManager::CirclesBoxContextManager(): _tempCircle(nullptr)
 {
 
     _box.setDimensions(Vector2(300, 400));
@@ -14,6 +14,7 @@ CirclesBoxContextManager::CirclesBoxContextManager()
 
     _engines.addEngine("collision", new Collision);
     _engines.addEngine("physic", new Physics);
+    _engines.addEngine("events", &_eventManager);
 
     {
         Collision* collision = (Collision*)(&_engines.getEngine("collision"));
@@ -30,6 +31,9 @@ CirclesBoxContextManager::CirclesBoxContextManager()
     first->setPosition(Vector2(400, 300));
     addCicle(first);
 
+
+    ((Physics*)(&_engines.getEngine("physic")))->addData(first);
+
     _engines.setSpeed(1);
     _engines.running(true);
 }
@@ -44,12 +48,11 @@ void CirclesBoxContextManager::addCicle(CircleObject* circle)
     _circles.push_back(circle);
 
     circle->setDrawMode(GL_POLYGON);
-    //circle->setRule("gravity", new Rule::Gravity(Vector2(0, 5)));
+    circle->setRule("gravity", new Rule::Gravity(Vector2(0, 5)));
     circle->setRule("resistance", new Rule::Resistance(Vector2(0.02, 0.02)));
 
-	circle->addCollisionHandler(new BounceInner, "box");
+    circle->addCollisionHandler(new BounceInner, "box");
 
-    ((Physics*)(&_engines.getEngine("physic")))->addData(circle);
     ((Collision*)(&_engines.getEngine("collision")))->addData(circle, {"box", "circle"});
 }
 
@@ -81,4 +84,38 @@ for(auto circle : _circles)
     {
         ((CirclesBoxViewManager*)(_viewManager))->addCicle(*circle);
     }
+}
+
+void CirclesBoxContextManager::applyTempCircle()
+{
+    if(_tempCircle != nullptr)
+	{
+		addCicle(_tempCircle);
+        ((Physics*)(&_engines.getEngine("physic")))->addData(_tempCircle);
+		
+		_tempCircle = nullptr;
+    }
+}
+
+void CirclesBoxContextManager::createTempCircle(Vector2 position)
+{
+    if(_tempCircle != nullptr)
+    {
+        applyTempCircle();
+    }
+
+    _tempCircle = new CircleObject;
+    _tempCircle->setColor(sf::Color(255, 255, 255));
+    _tempCircle->setPosition(position);
+    _tempCircle->setDrawMode(GL_LINE_LOOP);
+
+    if(_viewManager != nullptr)
+    {
+        ((CirclesBoxViewManager*)(_viewManager))->addCicle(*_tempCircle);
+    }
+}
+
+void CirclesBoxContextManager::setTempCircleRadiusByPoint(Vector2 position)
+{
+    _tempCircle->setRadius((_tempCircle->getPosition() - position).getLenght());
 }
