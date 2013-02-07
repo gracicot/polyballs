@@ -2,42 +2,42 @@
 
 void CircleDrawer::Render(sf::RenderTarget& Target) const
 {
-    glColor4ub(_color.r, _color.g, _color.b, _color.a);
-    
-	glPushMatrix();
-	glTranslatef(_position.x, _position.y, 0);
+    int num_segments = int(sqrt(_radius*24));
+
+    float theta = 2 * pi / float(num_segments);
+    float cosine = cos(theta);//precalculate the sine and cosine
+    float sine = sin(theta);
+
+    Vector2 verticle(_radius, 0);
 	
-	glBegin(getDrawMode());
+    glColor4ub(_color.r, _color.g, _color.b, _color.a);
+
+    glPushMatrix();
+    glTranslatef(_position.x, _position.y, 0);
+
+    glBegin(getDrawMode());
     {
-        double angle;
-        for(int i=0 ; i<int(sqrt(_radius*15)) ; i++)
+		float temp;
+        for(int i = 0; i < num_segments; i++)
         {
-			angle = 2 * pi * i / int(sqrt(_radius*10));
-            glVertex2d((cos(angle) * _radius), (sin(angle) * _radius));
+            glVertex2d(verticle.x, verticle.y);
+
+            temp = verticle.x;
+            verticle.x = cosine * verticle.x - sine * verticle.y;
+            verticle.y = sine * temp + cosine * verticle.y;
         }
     }
     glEnd();
-	
-	glPopMatrix();
+
+    glPopMatrix();
 }
 
 sf::Color CircleDrawer::getColor() const
 {
-	return _color;
-}
-
-double CircleDrawer::getRadius() const
-{
-	return _radius;
+    return _color;
 }
 
 void CircleDrawer::setColor(sf::Color color)
 {
-	_color = color;
+    _color = color;
 }
-
-void CircleDrawer::setRadius(double radius)
-{
-	_radius = radius;
-}
-

@@ -6,11 +6,13 @@
 
 #include "circledrawer.h"
 
-class CircleObject : public PhysicPoint, public Collisionnable::Circle, public CircleDrawer
+class CircleObject : public PhysicPoint, public Collisionnable::Circle, public CircleDrawer, public virtual Traits::Radius
 {
 public:
     CircleObject() = default;
-    ~CircleObject() = default;
+    virtual ~CircleObject();
+	
+	void setRadius(double radius);
 };
 
 #endif // CIRCLEOBJECT_H

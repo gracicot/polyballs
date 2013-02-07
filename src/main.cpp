@@ -17,7 +17,7 @@ int main(int argc, char **argv)
 	myWindow.setViewManager(viewManager);
 	contextManager.setViewManager(viewManager);	
 	
-	myWindow.Create(sf::VideoMode(800, 600, 32), "SFML Window");
+	myWindow.Create(sf::VideoMode(1024, 768, 32), "SFML Window");
 	
 	
 	

@@ -3,6 +3,7 @@
 #include "circlesboxviewmanager.h"
 #include "circleobject.h"
 #include "box.h"
+#include "bounceinner.h"
 
 CirclesBoxContextManager::CirclesBoxContextManager()
 {
@@ -15,18 +16,18 @@ CirclesBoxContextManager::CirclesBoxContextManager()
     _engines.addEngine("physic", new Physics);
 
     {
-		Collision* collision = (Collision*)(&_engines.getEngine("collision"));
-		
+        Collision* collision = (Collision*)(&_engines.getEngine("collision"));
+
         collision->addData(&_box, {"box"});
-		
-		collision->addTester(new SatTester, "box");
-		collision->addTester(new SatTester, "circle");
+
+        collision->addTester(new SatTester, "box");
+        collision->addTester(new SatTester, "circle");
     }
-    
+
     CircleObject* first = new CircleObject;
-	first->setRadius(75);
-	first->setColor(sf::Color(255, 255, 255));
-	first->setPosition(Vector2(400, 300));
+    first->setRadius(75);
+    first->setColor(sf::Color(255, 255, 255));
+    first->setPosition(Vector2(400, 300));
     addCicle(first);
 
     _engines.setSpeed(1);
@@ -41,14 +42,15 @@ CirclesBoxContextManager::~CirclesBoxContextManager()
 void CirclesBoxContextManager::addCicle(CircleObject* circle)
 {
     _circles.push_back(circle);
-	
-	   circle->setDrawMode(GL_POLYGON);
-	   circle->setRule("gravity", new Rule::Gravity(Vector2(0, 5)));
-	   circle->setRule("resistance", new Rule::Resistance(Vector2(0.02, 0.02)));
-	
-    
-	((Physics*)(&_engines.getEngine("physic")))->addData(circle);
-	((Collision*)(&_engines.getEngine("collision")))->addData(circle, {"box", "circle"});
+
+    circle->setDrawMode(GL_POLYGON);
+    //circle->setRule("gravity", new Rule::Gravity(Vector2(0, 5)));
+    circle->setRule("resistance", new Rule::Resistance(Vector2(0.02, 0.02)));
+
+	circle->addCollisionHandler(new BounceInner, "box");
+
+    ((Physics*)(&_engines.getEngine("physic")))->addData(circle);
+    ((Collision*)(&_engines.getEngine("collision")))->addData(circle, {"box", "circle"});
 }
 
 Box& CirclesBoxContextManager::getBox()
@@ -58,12 +60,12 @@ Box& CirclesBoxContextManager::getBox()
 
 void CirclesBoxContextManager::removeCicle(CircleObject* cicle)
 {
-	((Physics*)(&_engines.getEngine("physic")))->removeData(*cicle);
-	((Collision*)(&_engines.getEngine("collision")))->removeData(*cicle);
+    ((Physics*)(&_engines.getEngine("physic")))->removeData(*cicle);
+    ((Collision*)(&_engines.getEngine("collision")))->removeData(*cicle);
     ((CirclesBoxViewManager*)(_viewManager))->removeCicle(*cicle);
-	
+
     _circles.remove(cicle);
-	delete cicle;
+    delete cicle;
 }
 
 void CirclesBoxContextManager::execute(const float time)
@@ -75,8 +77,8 @@ void CirclesBoxContextManager::setViewManager(ViewManager& viewManager)
 {
     ContextManager::setViewManager(viewManager);
     ((CirclesBoxViewManager*)(_viewManager))->setBox(_box);
-	for(auto circle : _circles)
-	{
-		((CirclesBoxViewManager*)(_viewManager))->addCicle(*circle);
-	}
+for(auto circle : _circles)
+    {
+        ((CirclesBoxViewManager*)(_viewManager))->addCicle(*circle);
+    }
 }
