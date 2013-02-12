@@ -17,25 +17,15 @@ int main(int argc, char **argv)
 	myWindow.setViewManager(viewManager);
 	contextManager.setViewManager(viewManager);	
 	
-	myWindow.Create(sf::VideoMode(1024, 768, 32), "SFML Window");
-	
-	
+	myWindow.show();
 	
 	while (myWindow.IsOpened())
     {
-        // Process events
-        sf::Event Event;
-        while (myWindow.GetEvent(Event))
-        {
-            // Close window : exit
-            if (Event.Type == sf::Event::Closed)
-                myWindow.Close();
-        }
-		
+		myWindow.redirectEvent();
         // Clear the screen (fill it with black color)
         myWindow.Clear();
 		myWindow.render();
-
+		
         // Display window contents on screen
         myWindow.Display();
     }

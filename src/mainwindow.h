@@ -14,9 +14,14 @@ public:
 	
 	void render();
 	
+	void show();
+	
 	void setViewManager(ViewManager& viewmanager);
+	void redirectEvent();
 	
 private:
+	sf::View _view;
+	const sf::Input& _input;
 	ViewManager* _viewManager;
 	
 };

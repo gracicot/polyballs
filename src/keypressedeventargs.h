@@ -7,11 +7,11 @@ class KeyPressedEventArgs : public EventArgs
 {
 
 public:
-    KeyPressedEventArgs(char key='\0');
+    KeyPressedEventArgs(const char key='\0');
     virtual ~KeyPressedEventArgs();
 	
 	char getKey() const;
-	void setKey(char key);
+	void setKey(const char key);
 	
 private:
 	char _key;

@@ -15,9 +15,9 @@ EventManager::~EventManager()
 
 }
 
-void EventManager::triggerEvent(std::string eventType, const EventArgs& eventArgs)
+void EventManager::triggerEvent(std::string eventType, const EventArgs* eventArgs)
 {
-	_events.push(std::make_tuple(eventType, &eventArgs));
+	_events.push(std::make_tuple(eventType, eventArgs));
 }
 
 void EventManager::execute(const float time)
@@ -29,5 +29,7 @@ void EventManager::execute(const float time)
 		_events.pop();
 		
 		handleEvent(std::get<0>(event), std::get<1>(event));
+		
+		delete std::get<1>(event);
 	}
 }

@@ -3,6 +3,7 @@
 
 #include "eventmanager.h"
 
+class CircleObject;
 class CirclesBoxContextManager;
 
 class CirclesBoxEventManager : public EventManager
@@ -13,7 +14,13 @@ public:
 	
     virtual void handleEvent(std::string eventType, const EventArgs* eventArgs);
 	
+	void setContextManager(CirclesBoxContextManager& contextManager);
+	
+	CirclesBoxContextManager& getContextManager();
+	const CirclesBoxContextManager& getContextManager() const;
+	
 private:
+	CircleObject* _targetCircle;
 	CirclesBoxContextManager* _contextManager;
 };
 

@@ -1,8 +1,10 @@
 #include "circlesboxviewmanager.h"
 
 #include "boxdrawer.h"
+#include "springdrawer.h"
+#include "circleobject.h"
 
-CirclesBoxViewManager::CirclesBoxViewManager() : _box(nullptr)
+CirclesBoxViewManager::CirclesBoxViewManager() : _box(nullptr), _spring(nullptr)
 {
 
 }
@@ -14,11 +16,30 @@ CirclesBoxViewManager::~CirclesBoxViewManager()
 
 void CirclesBoxViewManager::render(sf::RenderTarget& taget) const
 {
-	taget.Draw(*_box);
+	if(_box != nullptr)
+	{
+		taget.Draw(*_box);
+	}
+
 	for(auto cicle : _circles)
 	{
 		taget.Draw(*cicle);
 	}
+	
+	if(_spring != nullptr)
+	{
+		taget.Draw(*_spring);
+	}
+}
+
+void CirclesBoxViewManager::setSpring(const CircleObject& circle, const Rule::Spring& spring)
+{
+	if(_spring != nullptr)
+	{
+		delete _spring;
+		_spring = nullptr;
+	}
+	_spring = new SpringDrawer(spring, circle, 0.1);
 }
 
 void CirclesBoxViewManager::addCicle(const CircleDrawer& cicle)

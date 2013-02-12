@@ -8,7 +8,9 @@ namespace MouseEventType
 {
 	enum MouseEventType{
 		Move,
-		Click
+		Click,
+		Drag,
+		Unclick
 	};
 }
 

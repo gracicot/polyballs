@@ -12,7 +12,6 @@ public:
 	virtual void render(sf::RenderTarget& taget) const =0;
 	
 private:
-	
 };
 
 #endif // VIEWMANAGER_H

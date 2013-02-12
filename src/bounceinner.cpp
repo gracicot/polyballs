@@ -19,9 +19,10 @@ void BounceInner::apply(Collisionnable::Collisionnable& object, const Collisionn
 	{
 		Vector2 nearest = sat->distance;
 		
-// 		point->setPosition(nearest - point->getPosition());
+		nearest.setAngle(nearest.getAngle()-(pi/2));
 		
-		std::cerr << nearest - point->getPosition() << std::endl;
+		//if(nearest.getLenght() < point->getRadius())
+		point->setPulse("collisionInner", nearest*point->getMass()*100);
 	}
 	else
 	{

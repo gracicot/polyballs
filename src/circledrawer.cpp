@@ -5,7 +5,7 @@ void CircleDrawer::Render(sf::RenderTarget& Target) const
     int num_segments = int(sqrt(_radius*24));
 
     float theta = 2 * pi / float(num_segments);
-    float cosine = cos(theta);//precalculate the sine and cosine
+    float cosine = cos(theta);
     float sine = sin(theta);
 
     Vector2 verticle(_radius, 0);

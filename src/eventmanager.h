@@ -13,7 +13,7 @@ public:
     EventManager();
     virtual ~EventManager();
 	
-	static void triggerEvent(std::string eventType, const EventArgs& eventArgs);
+	static void triggerEvent(std::string eventType, const EventArgs* eventArgs);
 	
     virtual void execute(const float time);
 	
