@@ -2,6 +2,7 @@
 #include "circleobject.h"
 #include "eventmanager.h"
 #include "collisioneventargs.h"
+#include "box.h"
 
 BounceInner::BounceInner()
 {
@@ -17,6 +18,13 @@ void BounceInner::apply(Collisionnable::Collisionnable& object, const Collisionn
 {
 	SatResult* sat = dynamic_cast<SatResult*>(&result);
 	CircleObject* point = dynamic_cast<CircleObject*>(&object);
+	const Box* box = nullptr;
+	
+	if(!(box = dynamic_cast<const Box*>(&other)))
+	{
+		return;
+	}
+	
 	if(point != nullptr && point != 0 && sat != nullptr && sat != 0)
 	{
 		Vector2 nearest = sat->distance;

@@ -32,7 +32,7 @@ public:
 	void applyTempCircle();
 	void setTempCircleRadiusByPoint(const Vector2 position);
 	
-	void breakCircle(CircleObject* circle);
+	void breakCircle(CircleObject* circle, double angle);
 	
 private:
 	CirclesBoxEventManager _eventManager;

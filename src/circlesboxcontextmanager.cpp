@@ -83,6 +83,7 @@ void CirclesBoxContextManager::setViewManager(ViewManager& viewManager)
 {
 	ContextManager::setViewManager(viewManager);
 	((CirclesBoxViewManager*)(_viewManager))->setBox(_box);
+
 for(auto circle : _circles)
 	{
 		((CirclesBoxViewManager*)(_viewManager))->addCicle(*circle);
@@ -189,6 +190,23 @@ for(auto circles : _circles)
 		if(circle == circles)
 		{
 			((Rule::Spring*)(&circle->getRule("spring")))->setValue(Vector2());
+		}
+	}
+}
+
+void CirclesBoxContextManager::breakCircle(CircleObject* circle, double angle)
+{
+for(auto circles : _circles)
+	{
+		if(circle == circles)
+		{
+			sf::Color subColor;
+
+			CircleObject* sub = new CircleObject;
+			sub->setRadius(circle->getRadius() / 2);
+			sub->setMass((circle->getRadius()) * pi);
+			sub->setColor(sf::Color(255, 255, 255));
+			addCicle(sub);
 		}
 	}
 }
