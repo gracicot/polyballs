@@ -34,6 +34,7 @@ CirclesBoxContextManager::CirclesBoxContextManager(): _tempCircle(nullptr)
 
 	((Physics*)(&_engines.getEngine("physic")))->addData(first);
 
+	_engines.setLoopPerSecond(0);
 	_engines.setSpeed(0.75);
 	_engines.running(true);
 }
@@ -74,7 +75,8 @@ void CirclesBoxContextManager::removeCicle(CircleObject* cicle)
 
 void CirclesBoxContextManager::execute(const float time)
 {
-	_box.setAngle(_box.getAngle() + (0.1 * time));
+	_box.setAngle(_box.getAngle() + (0.01 * time));
+	//_box.setAngle(pi*1.5);
 }
 
 void CirclesBoxContextManager::setViewManager(ViewManager& viewManager)

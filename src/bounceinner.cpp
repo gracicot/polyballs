@@ -1,5 +1,6 @@
 #include "bounceinner.h"
 #include "circleobject.h"
+#include "eventmanager.h"
 
 BounceInner::BounceInner()
 {
@@ -21,7 +22,6 @@ void BounceInner::apply(Collisionnable::Collisionnable& object, const Collisionn
 		
 		nearest.setAngle(nearest.getAngle()-(pi/2));
 		
-		//if(nearest.getLenght() < point->getRadius())
 		point->setPulse("collisionInner", nearest*point->getMass()*100);
 	}
 	else
