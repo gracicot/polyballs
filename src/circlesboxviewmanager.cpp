@@ -21,11 +21,11 @@ void CirclesBoxViewManager::render(sf::RenderTarget& taget) const
 		taget.Draw(*_box);
 	}
 
-	for(auto cicle : _circles)
+for(auto cicle : _circles)
 	{
 		taget.Draw(*cicle);
 	}
-	
+
 	if(_spring != nullptr)
 	{
 		taget.Draw(*_spring);
@@ -40,6 +40,15 @@ void CirclesBoxViewManager::setSpring(const CircleObject& circle, const Rule::Sp
 		_spring = nullptr;
 	}
 	_spring = new SpringDrawer(spring, circle, 0.1);
+}
+
+void CirclesBoxViewManager::unsetSpring()
+{
+	if(_spring != nullptr)
+	{
+		delete _spring;
+		_spring = nullptr;
+	}
 }
 
 void CirclesBoxViewManager::addCicle(const CircleDrawer& cicle)

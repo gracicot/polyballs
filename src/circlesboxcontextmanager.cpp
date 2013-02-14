@@ -69,6 +69,7 @@ void CirclesBoxContextManager::removeCicle(CircleObject* cicle)
 	((Collision*)(&_engines.getEngine("collision")))->removeData(*cicle);
 	((CirclesBoxViewManager*)(_viewManager))->removeCicle(*cicle);
 
+	((CirclesBoxViewManager*)(_viewManager))->unsetSpring();
 	_circles.remove(cicle);
 	delete cicle;
 }
@@ -76,7 +77,6 @@ void CirclesBoxContextManager::removeCicle(CircleObject* cicle)
 void CirclesBoxContextManager::execute(const float time)
 {
 	_box.setAngle(_box.getAngle() + (0.01 * time));
-	//_box.setAngle(pi*1.5);
 }
 
 void CirclesBoxContextManager::setViewManager(ViewManager& viewManager)
@@ -159,20 +159,38 @@ void CirclesBoxContextManager::createTempCircle(const Vector2 position)
 
 void CirclesBoxContextManager::setSpring(CircleObject* circle, Vector2 position)
 {
-	((Rule::Spring*)(&circle->getRule("spring")))->setValue(Vector2(300, 300));
-	((Rule::Spring*)(&circle->getRule("spring")))->setPosition(position);
-	
-	((CirclesBoxViewManager*)(_viewManager))->setSpring(*circle, *((Rule::Spring*)(&circle->getRule("spring"))) );
+for(auto circles : _circles)
+	{
+		if(circle == circles)
+		{
+			((Rule::Spring*)(&circle->getRule("spring")))->setValue(Vector2(300, 300));
+			((Rule::Spring*)(&circle->getRule("spring")))->setPosition(position);
+
+			((CirclesBoxViewManager*)(_viewManager))->setSpring(*circle, *((Rule::Spring*)(&circle->getRule("spring"))));
+		}
+	}
 }
 
 void CirclesBoxContextManager::setSpringPosition(CircleObject* circle, Vector2 position)
 {
-	((Rule::Spring*)(&circle->getRule("spring")))->setPosition(position);
+for(auto circles : _circles)
+	{
+		if(circle == circles)
+		{
+			((Rule::Spring*)(&circle->getRule("spring")))->setPosition(position);
+		}
+	}
 }
 
 void CirclesBoxContextManager::unsetSpring(CircleObject* circle)
 {
-	((Rule::Spring*)(&circle->getRule("spring")))->setValue(Vector2());
+for(auto circles : _circles)
+	{
+		if(circle == circles)
+		{
+			((Rule::Spring*)(&circle->getRule("spring")))->setValue(Vector2());
+		}
+	}
 }
 
 void CirclesBoxContextManager::setTempCircleRadiusByPoint(const Vector2 position)
