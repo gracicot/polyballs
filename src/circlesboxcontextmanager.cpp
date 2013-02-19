@@ -26,13 +26,13 @@ CirclesBoxContextManager::CirclesBoxContextManager(): _tempCircle(nullptr)
 		collision->addTester(new SatTester, "circle");
 	}
 
-	CircleObject* first = new CircleObject;
+	/*CircleObject* first = new CircleObject;
 	first->setRadius(75);
 	first->setMass(75 * 2 * pi);
 	first->setColor(sf::Color(255, 255, 255));
 	addCicle(first);
 
-	((Physics*)(&_engines.getEngine("physic")))->addData(first);
+	((Physics*)(&_engines.getEngine("physic")))->addData(first);*/
 
 	_engines.setLoopPerSecond(0);
 	_engines.setSpeed(0.75);
@@ -53,7 +53,7 @@ void CirclesBoxContextManager::addCicle(CircleObject* circle)
 	circle->setRule("resistance", new Rule::Resistance(Vector2(1, 1)*circle->getRadius()));
 	circle->setRule("spring", new Rule::Spring(Vector2(0, 0), 40, Vector2(400.00001, 300)));
 
-	circle->addCollisionHandler(new BounceInner, "box");
+	circle->addCollisionHandler(new Bounce, "box");
 
 	((Collision*)(&_engines.getEngine("collision")))->addData(circle, {"box", "circle"});
 }
@@ -63,15 +63,15 @@ Box& CirclesBoxContextManager::getBox()
 	return _box;
 }
 
-void CirclesBoxContextManager::removeCicle(CircleObject* cicle)
+void CirclesBoxContextManager::removeCicle(CircleObject* circle)
 {
-	((Physics*)(&_engines.getEngine("physic")))->removeData(*cicle);
-	((Collision*)(&_engines.getEngine("collision")))->removeData(*cicle);
-	((CirclesBoxViewManager*)(_viewManager))->removeCicle(*cicle);
+	((Physics*)(&_engines.getEngine("physic")))->removeData(*circle);
+	((Collision*)(&_engines.getEngine("collision")))->removeData(*circle);
+	((CirclesBoxViewManager*)(_viewManager))->removeCicle(*circle);
 
 	((CirclesBoxViewManager*)(_viewManager))->unsetSpring();
-	_circles.remove(cicle);
-	delete cicle;
+	_circles.remove(circle);
+	delete circle;
 }
 
 void CirclesBoxContextManager::execute(const float time)
@@ -200,13 +200,80 @@ for(auto circles : _circles)
 	{
 		if(circle == circles)
 		{
-			sf::Color subColor;
+			if(circles->getRadius() / 2.0 > 4)
+			{
+				sf::Color color(circle->getColor());
 
-			CircleObject* sub = new CircleObject;
-			sub->setRadius(circle->getRadius() / 2);
-			sub->setMass((circle->getRadius()) * pi);
-			sub->setColor(sf::Color(255, 255, 255));
-			addCicle(sub);
+				{
+					sf::Color sub_color = color;
+					int color_addition_total = color.r + color.g + color.b;
+
+					sub_color.r = color.r - sf::Randomizer::Random(0, color_addition_total);
+					sub_color.g = color.g - sf::Randomizer::Random(0, color_addition_total - (sub_color.r + color.r));
+					sub_color.b = color.b - (sub_color.r + sub_color.g);
+
+					color = sub_color;
+				}
+
+				{
+					Vector2 position;
+					Vector2 velocity;
+
+					CircleObject* sub = new CircleObject;
+					sub->setRadius(circle->getRadius() / 2);
+					sub->setMass((circle->getRadius()) * pi);
+					sub->setColor(color);
+
+
+					position.setLenght((circles->getRadius() / 2));
+					position.setAngle(angle - (pi / 4));
+
+					velocity = circle->getVelocity();
+					velocity.setAngle(velocity.getAngle() - (pi / 4));
+
+
+					sub->setPosition(circle->getPosition() + position);
+					sub->setVelocity(velocity);
+
+
+					addCicle(sub);
+
+					((Physics*)(&_engines.getEngine("physic")))->addData(sub);
+					((CirclesBoxViewManager*)(_viewManager))->addCicle(*sub);
+				}
+
+				sf::Color new_color;
+
+				new_color.r = circle->getColor().r - color.r;
+				new_color.g = circle->getColor().g - color.g;
+				new_color.b = circle->getColor().b - color.b;
+
+				{
+					Vector2 position;
+					Vector2 velocity;
+
+					CircleObject* sub = new CircleObject;
+					sub->setRadius(circle->getRadius() / 2);
+					sub->setMass((circle->getRadius()) * pi);
+					sub->setColor(new_color);
+
+					position.setLenght(circles->getRadius() / 2);
+					position.setAngle(angle + (pi / 4));
+
+					velocity = circle->getVelocity();
+					velocity.setAngle(velocity.getAngle() + (pi / 4));
+
+					sub->setPosition(circle->getPosition() - position);
+					sub->setVelocity(velocity);
+
+					addCicle(sub);
+
+					((Physics*)(&_engines.getEngine("physic")))->addData(sub);
+					((CirclesBoxViewManager*)(_viewManager))->addCicle(*sub);
+				}
+			}
+			removeCicle(circle);
+			break;
 		}
 	}
 }
@@ -228,4 +295,5 @@ void CirclesBoxContextManager::setTempCircleRadiusByPoint(const Vector2 position
 		}
 	}
 }
+
 

@@ -6,6 +6,9 @@
 #include <subgine/physic.hpp>
 
 #include "boxdrawer.h"
+#include "collisionsquare.h"
+
+class CollisionSquare;
 
 class Box : public virtual Collisionnable::Polygon, public BoxDrawer, public virtual Traits::Position, public virtual Traits::Angle, public virtual Traits::Vertex
 {
@@ -18,9 +21,15 @@ public:
 	void setAngle(double angle);
 	double getAngle() const;
 	
+	std::vector<CollisionSquare>& collisionsSquares();
+	const std::vector<CollisionSquare>& collisionsSquares() const;
+	
 protected:
 	
 private:
+	std::vector<CollisionSquare> _collisionSqares;
 };
+
+
 
 #endif // BOX_H

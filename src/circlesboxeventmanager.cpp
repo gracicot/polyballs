@@ -4,6 +4,7 @@
 #include "mouseevent.h"
 #include "keypressedeventargs.h"
 #include "circleobject.h"
+#include "collisioneventargs.h"
 
 CirclesBoxEventManager::CirclesBoxEventManager()
 {
@@ -71,6 +72,18 @@ void CirclesBoxEventManager::handleEvent(std::string eventType, const EventArgs*
 				{
 					_contextManager->unsetSpring(_targetCircle);
 				}
+			}
+		}
+	}
+	else if(eventType == "collision")
+	{
+		const CollisionEventArgs* args = dynamic_cast<const CollisionEventArgs*>(eventArgs);
+
+		if(args != nullptr)
+		{
+			if(args->getCircle().momentum().getLenght()  > 25000)
+			{
+				_contextManager->breakCircle(&args->getCircle(), args->getResult().distance.getAngle());
 			}
 		}
 	}
