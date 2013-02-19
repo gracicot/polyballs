@@ -8,7 +8,7 @@
 CirclesBoxContextManager::CirclesBoxContextManager(): _tempCircle(nullptr)
 {
 
-	_box.setDimensions(Vector2(300, 400));
+	_box.setDimensions(Vector2(600, 750));
 	_box.setDrawMode(GL_LINE_LOOP);
 
 	_eventManager.setContextManager(*this);
@@ -20,23 +20,27 @@ CirclesBoxContextManager::CirclesBoxContextManager(): _tempCircle(nullptr)
 	{
 		Collision* collision = (Collision*)(&_engines.getEngine("collision"));
 
-		collision->addData(&_box, {"box"});
+		for(auto& box : _box.collisionsSquares())
+		{
+			collision->addData(box, {"box"});
+		}
 
 		collision->addTester(new SatTester, "box");
 		collision->addTester(new SatTester, "circle");
 	}
 
-	/*CircleObject* first = new CircleObject;
+	CircleObject* first = new CircleObject;
 	first->setRadius(75);
 	first->setMass(75 * 2 * pi);
 	first->setColor(sf::Color(255, 255, 255));
 	addCicle(first);
 
-	((Physics*)(&_engines.getEngine("physic")))->addData(first);*/
+	((Physics*)(&_engines.getEngine("physic")))->addData(first);
 
 	_engines.setLoopPerSecond(0);
 	_engines.setSpeed(0.75);
 	_engines.running(true);
+	
 }
 
 CirclesBoxContextManager::~CirclesBoxContextManager()
@@ -76,7 +80,9 @@ void CirclesBoxContextManager::removeCicle(CircleObject* circle)
 
 void CirclesBoxContextManager::execute(const float time)
 {
-	_box.setAngle(_box.getAngle() + (0.01 * time));
+	sf::Lock lock(MainEngine::mutex());
+	
+	_box.setAngle(_box.getAngle() + (0.1 * time));
 }
 
 void CirclesBoxContextManager::setViewManager(ViewManager& viewManager)
@@ -196,6 +202,7 @@ for(auto circles : _circles)
 
 void CirclesBoxContextManager::breakCircle(CircleObject* circle, double angle)
 {
+	angle+=pi;
 for(auto circles : _circles)
 	{
 		if(circle == circles)
@@ -226,10 +233,10 @@ for(auto circles : _circles)
 
 
 					position.setLenght((circles->getRadius() / 2));
-					position.setAngle(angle - (pi / 4));
+					position.setAngle(angle - (pi));
 
 					velocity = circle->getVelocity();
-					velocity.setAngle(velocity.getAngle() - (pi / 4));
+					velocity.setAngle(velocity.getAngle() - (pi/2));
 
 
 					sub->setPosition(circle->getPosition() + position);
@@ -258,10 +265,10 @@ for(auto circles : _circles)
 					sub->setColor(new_color);
 
 					position.setLenght(circles->getRadius() / 2);
-					position.setAngle(angle + (pi / 4));
+					position.setAngle(angle + (pi));
 
 					velocity = circle->getVelocity();
-					velocity.setAngle(velocity.getAngle() + (pi / 4));
+					velocity.setAngle(velocity.getAngle() + (pi/2));
 
 					sub->setPosition(circle->getPosition() - position);
 					sub->setVelocity(velocity);

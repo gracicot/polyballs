@@ -4,6 +4,8 @@
 #include <subgine/system.hpp>
 #include <subgine/collision.hpp>
 
+#include "boxdrawer.h"
+
 class CollisionSquare : public virtual Collisionnable::Polygon, public virtual Traits::Position, public virtual Traits::Angle, public virtual Traits::Vertex
 {
 public:

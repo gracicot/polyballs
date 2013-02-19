@@ -22,6 +22,8 @@ void EventManager::triggerEvent(std::string eventType, const EventArgs* eventArg
 
 void EventManager::execute(const float time)
 {
+	sf::Lock lock(MainEngine::mutex());
+	
 	std::tuple<std::string, const EventArgs*> event;
 	while(!_events.empty())
 	{

@@ -81,9 +81,15 @@ void CirclesBoxEventManager::handleEvent(std::string eventType, const EventArgs*
 
 		if(args != nullptr)
 		{
-			if(args->getCircle().momentum().getLenght()  > 25000)
+			if(args->getCircle().momentum().getLenght()  > 75000)
 			{
+				try{
 				_contextManager->breakCircle(&args->getCircle(), args->getResult().distance.getAngle());
+				}
+				catch(std::bad_alloc& e)
+				{
+					
+				}
 			}
 		}
 	}

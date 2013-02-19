@@ -21,13 +21,13 @@ public:
 	void setAngle(double angle);
 	double getAngle() const;
 	
-	std::vector<CollisionSquare>& collisionsSquares();
-	const std::vector<CollisionSquare>& collisionsSquares() const;
+	std::vector<CollisionSquare*>& collisionsSquares();
+	const std::vector<CollisionSquare*>& collisionsSquares() const;
 	
 protected:
 	
 private:
-	std::vector<CollisionSquare> _collisionSqares;
+	std::vector<CollisionSquare*> _collisionSquares;
 };
 
 

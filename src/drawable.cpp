@@ -1,6 +1,6 @@
 #include "drawable.h"
 
-Drawable::Drawable()
+Drawable::Drawable() : _drawMode(GL_LINE_LOOP)
 {
 	
 }
