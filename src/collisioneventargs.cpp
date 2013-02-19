@@ -10,7 +10,7 @@ const SatResult& CollisionEventArgs::getResult() const
 	return _result;
 }
 
-const CircleObject& CollisionEventArgs::getCircle() const
+CircleObject& CollisionEventArgs::getCircle() const
 {
 	return _circle;
 }

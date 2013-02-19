@@ -13,7 +13,7 @@ public:
 	virtual ~CollisionEventArgs();
 	
 	const SatResult& getResult() const;
-	const CircleObject& getCircle() const;
+	CircleObject& getCircle() const;
 	
 private:
 	SatResult& _result;
