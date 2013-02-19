@@ -4,39 +4,36 @@
 #include "collisioneventargs.h"
 #include "box.h"
 
-BounceInner::BounceInner()
+Bounce::Bounce()
 {
 
 }
 
-BounceInner::~BounceInner()
+Bounce::~Bounce()
 {
 
 }
 
-void BounceInner::apply(Collisionnable::Collisionnable& object, const Collisionnable::Collisionnable& other, CollisionResult& result)
+void Bounce::apply(Collisionnable::Collisionnable& object, const Collisionnable::Collisionnable& other, CollisionResult& result)
 {
 	SatResult* sat = dynamic_cast<SatResult*>(&result);
 	CircleObject* point = dynamic_cast<CircleObject*>(&object);
 	const Box* box = nullptr;
-	
+
 	if(!(box = dynamic_cast<const Box*>(&other)))
 	{
 		return;
 	}
-	
+
 	if(point != nullptr && point != 0 && sat != nullptr && sat != 0)
 	{
-		Vector2 nearest = sat->distance;
+			Vector2 nearest = sat->distance;
+			
+
+			//point->setPosition(point->getPosition() + nearest);
+			point->setPulse("collision", nearest * point->getMass() * 10);
+
+			EventManager::triggerEvent("collision", new CollisionEventArgs(*sat, *point));
 		
-		nearest.setAngle(nearest.getAngle()-(pi/2));
-		
-		point->setPulse("collisionInner", nearest*point->getMass()*100);
-		
-		EventManager::triggerEvent("collision", new CollisionEventArgs(*sat, *point));
-	}
-	else
-	{
-		throw std::runtime_error("can't convert current collisionnable to PhysicPoint...");
 	}
 }

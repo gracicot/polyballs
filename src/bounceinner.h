@@ -5,11 +5,11 @@
 #include <subgine/collision.hpp>
 #include <subgine/physic.hpp>
 
-class BounceInner : public CollisionHandler
+class Bounce : public CollisionHandler
 {
 public:
-    BounceInner();
-    virtual ~BounceInner();
+    Bounce();
+    virtual ~Bounce();
 	
     virtual void apply(Collisionnable::Collisionnable& object, const Collisionnable::Collisionnable& other, CollisionResult& result);
 };
