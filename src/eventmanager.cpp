@@ -3,7 +3,7 @@
 #include <tuple>
 #include "eventargs.h"
 
-std::queue<std::tuple<std::string, const EventArgs*>> EventManager::_events;
+std::queue<std::pair<std::string, const EventArgs*>> EventManager::_events;
 
 EventManager::EventManager()
 {
@@ -17,21 +17,22 @@ EventManager::~EventManager()
 
 void EventManager::triggerEvent(std::string eventType, const EventArgs* eventArgs)
 {
-	_events.push(std::make_tuple(eventType, eventArgs));
+	sf::Lock lock(MainEngine::mutex());
+	_events.push(std::pair<std::string, const EventArgs*>(eventType, eventArgs));
 }
 
 void EventManager::execute(const float time)
 {
 	sf::Lock lock(MainEngine::mutex());
 	
-	std::tuple<std::string, const EventArgs*> event;
+	std::pair<std::string, const EventArgs*> event;
 	while(!_events.empty())
 	{
 		event = _events.front();
 		_events.pop();
 		
-		handleEvent(std::get<0>(event), std::get<1>(event));
+		handleEvent(event.first, event.second);
 		
-		delete std::get<1>(event);
+		delete event.second;
 	}
 }

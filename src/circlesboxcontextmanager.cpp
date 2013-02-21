@@ -5,7 +5,7 @@
 #include "box.h"
 #include "bounceinner.h"
 
-CirclesBoxContextManager::CirclesBoxContextManager(): _tempCircle(nullptr)
+CirclesBoxContextManager::CirclesBoxContextManager(): _tempCircle(nullptr), _boxSpeed(0.2)
 {
 
 	_box.setDimensions(Vector2(600, 750));
@@ -20,7 +20,7 @@ CirclesBoxContextManager::CirclesBoxContextManager(): _tempCircle(nullptr)
 	{
 		Collision* collision = (Collision*)(&_engines.getEngine("collision"));
 
-		for(auto& box : _box.collisionsSquares())
+	for(auto & box : _box.collisionsSquares())
 		{
 			collision->addData(box, {"box"});
 		}
@@ -40,7 +40,7 @@ CirclesBoxContextManager::CirclesBoxContextManager(): _tempCircle(nullptr)
 	_engines.setLoopPerSecond(0);
 	_engines.setSpeed(0.75);
 	_engines.running(true);
-	
+
 }
 
 CirclesBoxContextManager::~CirclesBoxContextManager()
@@ -53,9 +53,9 @@ void CirclesBoxContextManager::addCicle(CircleObject* circle)
 	_circles.push_back(circle);
 
 	circle->setDrawMode(GL_POLYGON);
-	circle->setRule("gravity", new Rule::Gravity(Vector2(0, 30)));
-	circle->setRule("resistance", new Rule::Resistance(Vector2(1, 1)*circle->getRadius()));
-	circle->setRule("spring", new Rule::Spring(Vector2(0, 0), 40, Vector2(400.00001, 300)));
+	circle->setRule("gravity", new Rule::Gravity(Vector2(0, 80)));
+	circle->setRule("resistance", new Rule::Resistance(Vector2(0.5, 0.5)*circle->getRadius()));
+	circle->setRule("spring", new Rule::Spring(Vector2(0, 0), 80, Vector2(400.00001, 300)));
 
 	circle->addCollisionHandler(new Bounce, "box");
 
@@ -67,22 +67,45 @@ Box& CirclesBoxContextManager::getBox()
 	return _box;
 }
 
-void CirclesBoxContextManager::removeCicle(CircleObject* circle)
+void CirclesBoxContextManager::removeCicle(CircleObject*& circle)
 {
 	((Physics*)(&_engines.getEngine("physic")))->removeData(*circle);
 	((Collision*)(&_engines.getEngine("collision")))->removeData(*circle);
 	((CirclesBoxViewManager*)(_viewManager))->removeCicle(*circle);
 
-	((CirclesBoxViewManager*)(_viewManager))->unsetSpring();
+	if(((CirclesBoxViewManager*)(_viewManager)))
+		((CirclesBoxViewManager*)(_viewManager))->unsetSpring(*circle);
 	_circles.remove(circle);
 	delete circle;
+	circle = nullptr;
 }
 
 void CirclesBoxContextManager::execute(const float time)
 {
-	sf::Lock lock(MainEngine::mutex());
-	
-	_box.setAngle(_box.getAngle() + (0.1 * time));
+	_box.setAngle(_box.getAngle() + (_boxSpeed * time));
+
+	correctCircle();
+}
+
+void CirclesBoxContextManager::correctCircle()
+{
+	if(_tempCircle != nullptr)
+	{
+
+		SatTester tester;
+		SatResult* result = nullptr;
+
+	for(auto border : _box.collisionsSquares())
+		{
+			result = dynamic_cast<SatResult*>(tester.compareObject(*_tempCircle, *border, 0));
+
+
+			if(result != nullptr)
+			{
+				_tempCircle->setRadius(_tempCircle->getRadius() - result->distance.getLenght());
+			}
+		}
+	}
 }
 
 void CirclesBoxContextManager::setViewManager(ViewManager& viewManager)
@@ -100,17 +123,18 @@ void CirclesBoxContextManager::applyTempCircle()
 {
 	if(_tempCircle != nullptr)
 	{
-		if(_tempCircle->getRadius() > 2)
+		if(_tempCircle->getRadius() > 5)
 		{
+			_tempCircle->setMass(2 * _tempCircle->getRadius() * pi);
 			addCicle(_tempCircle);
 			((Physics*)(&_engines.getEngine("physic")))->addData(_tempCircle);
+			_tempCircle = nullptr;
 		}
 		else
 		{
 			removeCicle(_tempCircle);
 		}
 
-		_tempCircle = nullptr;
 	}
 }
 
@@ -129,6 +153,21 @@ for(auto circle : _circles)
 			return circle;
 		}
 	}
+	return nullptr;
+}
+
+Box* CirclesBoxContextManager::boxHitTest(const Vector2 point)
+{
+	PointTester tester;
+	CollisionResult* result;
+	Collisionnable::Point test_point(point);
+
+	result = tester.compareObject(_box, test_point, 0);
+	if(result != nullptr && result->isCollision)
+	{
+		return &_box;
+	}
+
 	return nullptr;
 }
 
@@ -202,7 +241,7 @@ for(auto circles : _circles)
 
 void CirclesBoxContextManager::breakCircle(CircleObject* circle, double angle)
 {
-	angle+=pi;
+	angle += pi;
 for(auto circles : _circles)
 	{
 		if(circle == circles)
@@ -236,7 +275,7 @@ for(auto circles : _circles)
 					position.setAngle(angle - (pi));
 
 					velocity = circle->getVelocity();
-					velocity.setAngle(velocity.getAngle() - (pi/2));
+					velocity.setAngle(velocity.getAngle() - (pi / 2));
 
 
 					sub->setPosition(circle->getPosition() + position);
@@ -268,7 +307,7 @@ for(auto circles : _circles)
 					position.setAngle(angle + (pi));
 
 					velocity = circle->getVelocity();
-					velocity.setAngle(velocity.getAngle() + (pi/2));
+					velocity.setAngle(velocity.getAngle() + (pi / 2));
 
 					sub->setPosition(circle->getPosition() - position);
 					sub->setVelocity(velocity);
@@ -293,14 +332,21 @@ void CirclesBoxContextManager::setTempCircleRadiusByPoint(const Vector2 position
 		if(newSize < 100)
 		{
 			_tempCircle->setRadius(newSize);
-			_tempCircle->setMass(2 * newSize * pi);
 		}
 		else
 		{
 			_tempCircle->setRadius(100);
-			_tempCircle->setMass(2 * 100 * pi);
 		}
+		correctCircle();
 	}
 }
 
+double CirclesBoxContextManager::getBoxSpeed() const
+{
+	return _boxSpeed;
+}
 
+void CirclesBoxContextManager::setBoxSpeed(const double speed)
+{
+	_boxSpeed = speed;
+}

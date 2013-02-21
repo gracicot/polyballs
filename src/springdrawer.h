@@ -35,6 +35,8 @@ public:
 
 	float getSize();
 	void setSize(float size);
+	
+	const PhysicPoint& getObject() const;
 
 private:
 	float _size;

@@ -20,7 +20,7 @@ public:
 	void removeCicle(const CircleDrawer& cicle);
 	
 	void setSpring(const CircleObject& circle, const Rule::Spring& spring);
-	void unsetSpring();
+	void unsetSpring(const CircleObject& circle);
 	
 	void setBox(BoxDrawer& box);
 	BoxDrawer& getBox();

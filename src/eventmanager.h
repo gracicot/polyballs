@@ -20,7 +20,7 @@ public:
 	virtual void handleEvent(std::string eventType, const EventArgs* eventArgs) = 0;
 	
 private:
-	static std::queue<std::tuple<std::string, const EventArgs*>> _events;
+	static std::queue<std::pair<std::string, const EventArgs*>> _events;
 	
 };
 

@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "eventmanager.h"
 #include "mouseevent.h"
+#include "keypressedeventargs.h"
 
 MainWindow::MainWindow(): _viewManager(nullptr), _input(this->GetInput())
 {
@@ -34,6 +35,8 @@ void MainWindow::setViewManager(ViewManager& viewmanager)
 
 void MainWindow::redirectEvent()
 {
+	//sf::Lock lock(MainEngine::mutex());
+	
 	sf::Event event;
 
 	while(this->GetEvent(event))
@@ -72,6 +75,12 @@ void MainWindow::redirectEvent()
 				myEvent = new MouseEvent(MouseEventType::Move, Vector2(_input.GetMouseX() - this->GetWidth() / 2.0, _input.GetMouseY() - this->GetHeight() / 2.0));
 				EventManager::triggerEvent("mouse", myEvent);
 			}
+		}
+		else if(event.Type == sf::Event::KeyPressed)
+		{
+			KeyPressedEventArgs* myEvent = nullptr;
+			myEvent = new KeyPressedEventArgs(event.Key.Code);
+			EventManager::triggerEvent("keyPressed", myEvent);
 		}
 	}
 

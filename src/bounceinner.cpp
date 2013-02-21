@@ -25,25 +25,23 @@ void Bounce::apply(Collisionnable::Collisionnable& object, const Collisionnable:
 	{
 		if((other_circle = dynamic_cast<const CircleObject*>(&other)))
 		{
-			if((other_circle->getPosition() - point->getPosition()).getLenght() < (other_circle->getRadius() + point->getRadius()))
-			{
-				Vector2 nearest = sat->distance;
-				nearest.setAngle((other_circle->getPosition() - point->getPosition()).getAngle());
-				nearest.setLenght((-1 * (other_circle->getPosition() - point->getPosition()).getLenght()) + (other_circle->getRadius() + point->getRadius()));
+			Vector2 nearest = sat->distance;
+			nearest.setAngle(( point->getPosition() - other_circle->getPosition()).getAngle());
 
+			point->setPulse("collision", nearest * 60);
 
-				point->setPulse("collision", nearest * -400);
-
-				EventManager::triggerEvent("collision", new CollisionEventArgs(*sat, *point));
-			}
+			EventManager::triggerEvent("collision", new CollisionEventArgs(*sat, *point));
 		}
 		else
 		{
 			Vector2 nearest = sat->distance;
+			Vector2 velocity = point->getVelocity();
+				point->setPosition(point->getPosition() + nearest);
+			
 
-
-			//point->setPosition(point->getPosition() + nearest);
-			point->setPulse("collision", nearest * point->getMass() * 40);
+			velocity.setAngle((2*(nearest.getAngle()+(pi/2))) - velocity.getAngle());
+			point->setVelocity(velocity);
+			//point->setPulse("collision", nearest * point->getMass()*100);
 
 			EventManager::triggerEvent("collision", new CollisionEventArgs(*sat, *point));
 		}

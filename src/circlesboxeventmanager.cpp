@@ -44,7 +44,11 @@ void CirclesBoxEventManager::handleEvent(std::string eventType, const EventArgs*
 				_targetCircle = _contextManager->circleHitTest(args->getPosition());
 				if(_targetCircle == nullptr)
 				{
-					_contextManager->createTempCircle(args->getPosition());
+					Box* targetBox = _contextManager->boxHitTest(args->getPosition());
+					if(targetBox != nullptr)
+					{
+						_contextManager->createTempCircle(args->getPosition());
+					}
 				}
 				else
 				{
@@ -81,15 +85,9 @@ void CirclesBoxEventManager::handleEvent(std::string eventType, const EventArgs*
 
 		if(args != nullptr)
 		{
-			if(args->getCircle().momentum().getLenght()  > 75000)
+			if(args->getCircle().momentum().getLenght()  > 100000)
 			{
-				try{
 				_contextManager->breakCircle(&args->getCircle(), args->getResult().distance.getAngle());
-				}
-				catch(std::bad_alloc& e)
-				{
-					
-				}
 			}
 		}
 	}
@@ -99,7 +97,16 @@ void CirclesBoxEventManager::handleEvent(std::string eventType, const EventArgs*
 
 		if(args != nullptr)
 		{
+			switch(args->getKey())
+			{
+			case sf::Key::Add:
+				_contextManager->setBoxSpeed(_contextManager->getBoxSpeed() + 0.05);
+				break;
 
+			case sf::Key::Subtract:
+				_contextManager->setBoxSpeed(_contextManager->getBoxSpeed() - 0.05);
+				break;
+			}
 		}
 	}
 }

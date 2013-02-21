@@ -15,7 +15,7 @@ public:
     virtual ~CirclesBoxContextManager();
 	
 	void addCicle(CircleObject* cicle);
-	void removeCicle(CircleObject* cicle);
+	void removeCicle(CircleObject*& circle);
 	CircleObject* circleHitTest(const Vector2 point);
 	const CircleObject* circleHitTest(const Vector2 point) const;
 	
@@ -26,6 +26,8 @@ public:
 	void setSpringPosition(CircleObject* circle, Vector2 position);
 	void unsetSpring(CircleObject* circle);
 	
+	Box* boxHitTest(const Vector2 point);
+	
 	Box& getBox();
 	
 	void createTempCircle(const Vector2 position);
@@ -34,7 +36,13 @@ public:
 	
 	void breakCircle(CircleObject* circle, double angle);
 	
+	double getBoxSpeed() const;
+	void setBoxSpeed(const double speed);
+	
 private:
+	void correctCircle();
+	
+	double _boxSpeed;
 	CirclesBoxEventManager _eventManager;
 	
 	Box _box;

@@ -2,19 +2,20 @@
 #define KEYPRESSEDEVENTARGS_H
 
 #include "eventargs.h"
+#include <SFML/Window/Event.hpp>
 
 class KeyPressedEventArgs : public EventArgs
 {
 
 public:
-    KeyPressedEventArgs(const char key='\0');
+    KeyPressedEventArgs(const sf::Key::Code key);
     virtual ~KeyPressedEventArgs();
 	
-	char getKey() const;
-	void setKey(const char key);
+	sf::Key::Code getKey() const;
+	void setKey(const sf::Key::Code key);
 	
 private:
-	char _key;
+	sf::Key::Code _key;
 };
 
 #endif // KEYPRESSEDEVENTARGS_H

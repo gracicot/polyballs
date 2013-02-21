@@ -21,26 +21,28 @@ void Box::setDimensions(Vector2 dimensions)
     BoxDrawer::setDimensions(dimensions);
 	
 	_vertex.clear();
+	
+	double thickness = 900;
 
     _vertex.push_back(Vector2(_position.x - (_dimensions.x/2), _position.y - (_dimensions.y/2)));
     _vertex.push_back(Vector2(_position.x + (_dimensions.x/2), _position.y - (_dimensions.y/2)));
     _vertex.push_back(Vector2(_position.x + (_dimensions.x/2), _position.y + (_dimensions.y/2)));
     _vertex.push_back(Vector2(_position.x - (_dimensions.x/2), _position.y + (_dimensions.y/2)));
 	
- 	_collisionSquares[0]->setPosition(Vector2(_position.x, (_position.y-40) - (_dimensions.y/2)));
-	_collisionSquares[0]->setDimensions(Vector2(_dimensions.x+160, 80));
+ 	_collisionSquares[0]->setPosition(Vector2(_position.x, (_position.y-(thickness/2)) - (_dimensions.y/2)));
+	_collisionSquares[0]->setDimensions(Vector2(_dimensions.x+(thickness*2), thickness));
  	_collisionSquares[0]->setPosition(Vector2());
 	
- 	_collisionSquares[1]->setPosition(Vector2(_position.x + (_dimensions.x/2) + 40, _position.y));
-	_collisionSquares[1]->setDimensions(Vector2(80, _dimensions.y+160));
+ 	_collisionSquares[1]->setPosition(Vector2(_position.x + (_dimensions.x/2) + (thickness/2), _position.y));
+	_collisionSquares[1]->setDimensions(Vector2(thickness, _dimensions.y+(thickness*2)));
  	_collisionSquares[1]->setPosition(Vector2());
 	
- 	_collisionSquares[2]->setPosition(Vector2(_position.x, _position.y + 40 + (_dimensions.y/2)));
-	_collisionSquares[2]->setDimensions(Vector2(_dimensions.x+160, 80));
+ 	_collisionSquares[2]->setPosition(Vector2(_position.x, _position.y + (thickness/2) + (_dimensions.y/2)));
+	_collisionSquares[2]->setDimensions(Vector2(_dimensions.x+(thickness*2), thickness));
  	_collisionSquares[2]->setPosition(Vector2());
 	
- 	_collisionSquares[3]->setPosition(Vector2((_position.x-40) - (_dimensions.x/2), _position.y));
-	_collisionSquares[3]->setDimensions(Vector2(80, _dimensions.y+160));
+ 	_collisionSquares[3]->setPosition(Vector2((_position.x-(thickness/2)) - (_dimensions.x/2), _position.y));
+	_collisionSquares[3]->setDimensions(Vector2(thickness, _dimensions.y+(thickness*2)));
  	_collisionSquares[3]->setPosition(Vector2());
 }
 

@@ -1,6 +1,6 @@
 #include "keypressedeventargs.h"
 
-KeyPressedEventArgs::KeyPressedEventArgs(const char key): _key(key)
+KeyPressedEventArgs::KeyPressedEventArgs(const sf::Key::Code key): _key(key)
 {
 	
 }
@@ -10,12 +10,12 @@ KeyPressedEventArgs::~KeyPressedEventArgs()
 
 }
 
-char KeyPressedEventArgs::getKey() const
+sf::Key::Code KeyPressedEventArgs::getKey() const
 {
 	return _key;
 }
 
-void KeyPressedEventArgs::setKey(const char key)
+void KeyPressedEventArgs::setKey(const sf::Key::Code key)
 {
 	_key = key;
 }
