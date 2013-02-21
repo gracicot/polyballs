@@ -39,7 +39,7 @@ void CirclesBoxViewManager::setSpring(const CircleObject& circle, const Rule::Sp
 		delete _spring;
 		_spring = nullptr;
 	}
-	_spring = new SpringDrawer(spring, circle, 0.1);
+	_spring = new SpringDrawer(spring, circle, 0.04);
 }
 
 void CirclesBoxViewManager::unsetSpring(const CircleObject& circle)

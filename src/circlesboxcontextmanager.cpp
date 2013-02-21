@@ -55,7 +55,7 @@ void CirclesBoxContextManager::addCicle(CircleObject* circle)
 	circle->setDrawMode(GL_POLYGON);
 	circle->setRule("gravity", new Rule::Gravity(Vector2(0, 80)));
 	circle->setRule("resistance", new Rule::Resistance(Vector2(0.5, 0.5)*circle->getRadius()));
-	circle->setRule("spring", new Rule::Spring(Vector2(0, 0), 80, Vector2(400.00001, 300)));
+	circle->setRule("spring", new Rule::Spring(Vector2(0, 0), 100, Vector2(400.00001, 300)));
 
 	circle->addCollisionHandler(new Bounce, "box");
 
@@ -209,7 +209,7 @@ for(auto circles : _circles)
 	{
 		if(circle == circles)
 		{
-			((Rule::Spring*)(&circle->getRule("spring")))->setValue(Vector2(300, 300));
+			((Rule::Spring*)(&circle->getRule("spring")))->setValue(Vector2(3, 3) * circle->getMass());
 			((Rule::Spring*)(&circle->getRule("spring")))->setPosition(position);
 
 			((CirclesBoxViewManager*)(_viewManager))->setSpring(*circle, *((Rule::Spring*)(&circle->getRule("spring"))));
