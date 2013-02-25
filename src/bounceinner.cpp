@@ -28,7 +28,7 @@ void Bounce::apply(Collisionnable::Collisionnable& object, const Collisionnable:
 			Vector2 nearest = sat->distance;
 			nearest.setAngle(( point->getPosition() - other_circle->getPosition()).getAngle());
 
-			point->setPulse("collision", nearest * 60);
+			point->setPulse("collision", nearest * point->getMass() * other_circle->getMass() / 400);
 
 			EventManager::triggerEvent("collision", new CollisionEventArgs(*sat, *point));
 		}

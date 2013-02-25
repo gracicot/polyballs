@@ -36,7 +36,7 @@ void MainWindow::setViewManager(ViewManager& viewmanager)
 void MainWindow::redirectEvent()
 {
 	//sf::Lock lock(MainEngine::mutex());
-	
+
 	sf::Event event;
 
 	while(this->GetEvent(event))
@@ -57,9 +57,11 @@ void MainWindow::redirectEvent()
 		}
 		else if(event.Type == sf::Event::MouseButtonReleased)
 		{
+
 			MouseEvent* myEvent = nullptr;
 			myEvent = new MouseEvent(MouseEventType::Unclick, Vector2(_input.GetMouseX() - this->GetWidth() / 2.0, _input.GetMouseY() - this->GetHeight() / 2.0));
 			EventManager::triggerEvent("mouse", myEvent);
+
 		}
 		else if(event.Type == sf::Event::MouseMoved)
 		{
@@ -85,4 +87,6 @@ void MainWindow::redirectEvent()
 	}
 
 }
+
+
 
