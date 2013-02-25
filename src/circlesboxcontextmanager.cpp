@@ -245,17 +245,16 @@ for(auto circles : _circles)
 	{
 		if(circle == circles)
 		{
-			if(circles->getRadius() / 2.0 > 4)
+			if(circles->getRadius() / 2.0 > 2)
 			{
 				sf::Color color(circle->getColor());
 
 				{
 					sf::Color sub_color = color;
-					int color_addition_total = color.r + color.g + color.b;
 
-					sub_color.r = color.r - sf::Randomizer::Random(0, color_addition_total);
-					sub_color.g = color.g - sf::Randomizer::Random(0, color_addition_total - (sub_color.r + color.r));
-					sub_color.b = color.b - (sub_color.r + sub_color.g);
+					sub_color.r = color.r - sf::Randomizer::Random(0, color.r);
+					sub_color.g = color.g - sf::Randomizer::Random(0, color.g);
+					sub_color.b = color.b - sf::Randomizer::Random(0, color.b);
 
 					color = sub_color;
 				}
