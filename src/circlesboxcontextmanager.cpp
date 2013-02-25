@@ -26,7 +26,6 @@ CirclesBoxContextManager::CirclesBoxContextManager(): _tempCircle(nullptr), _box
 		}
 
 		collision->addTester(new SatTester, "box");
-		collision->addTester(new SatTester, "circle");
 	}
 
 	CircleObject* first = new CircleObject;
@@ -59,7 +58,7 @@ void CirclesBoxContextManager::addCicle(CircleObject* circle)
 
 	circle->addCollisionHandler(new Bounce, "box");
 
-	((Collision*)(&_engines.getEngine("collision")))->addData(circle, {"box", "circle"});
+	((Collision*)(&_engines.getEngine("collision")))->addData(circle, {"box"});
 }
 
 Box& CirclesBoxContextManager::getBox()
