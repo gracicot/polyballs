@@ -3,6 +3,7 @@
 
 #include <string>
 #include <queue>
+#include <condition_variable>
 #include <subgine/system.hpp>
 
 class EventArgs;
@@ -20,6 +21,7 @@ public:
 	virtual void handleEvent(std::string eventType, const EventArgs* eventArgs) = 0;
 	
 private:
+	std::condition_variable _condition;
 	static std::queue<std::pair<std::string, const EventArgs*>> _events;
 	
 };

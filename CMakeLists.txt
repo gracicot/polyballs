@@ -4,7 +4,7 @@ set(EXECUTABLE_NAME "polyballs")
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 
 project(${EXECUTABLE_NAME})
-add_definitions("-std=c++0x")
+add_definitions("-std=c++0x -pthread")
 
 file(GLOB_RECURSE SRC_FILES "src/*.cpp")
 

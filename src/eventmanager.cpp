@@ -17,13 +17,14 @@ EventManager::~EventManager()
 
 void EventManager::triggerEvent(std::string eventType, const EventArgs* eventArgs)
 {
-	sf::Lock lock(MainEngine::mutex());
+	MainEngine::mutex().lock();
 	_events.push(std::pair<std::string, const EventArgs*>(eventType, eventArgs));
+	MainEngine::mutex().unlock();
 }
 
 void EventManager::execute(const float time)
 {
-	sf::Lock lock(MainEngine::mutex());
+	MainEngine::mutex().lock();
 	
 	std::pair<std::string, const EventArgs*> event;
 	while(!_events.empty())
@@ -33,6 +34,8 @@ void EventManager::execute(const float time)
 		
 		handleEvent(event.first, event.second);
 		
-		delete event.second;
+		delete event.second;	
 	}
+	
+	MainEngine::mutex().unlock();
 }

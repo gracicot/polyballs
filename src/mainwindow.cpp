@@ -35,8 +35,6 @@ void MainWindow::setViewManager(ViewManager& viewmanager)
 
 void MainWindow::redirectEvent()
 {
-	//sf::Lock lock(MainEngine::mutex());
-
 	sf::Event event;
 
 	while(this->GetEvent(event))
