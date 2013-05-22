@@ -6,7 +6,7 @@
 #include "viewmanager.h"
 #include "contextmanager.h"
 
-class MainWindow : public sf::RenderWindow
+class MainWindow : public sf::Window
 {
 public:
     MainWindow();
@@ -21,7 +21,6 @@ public:
 	
 private:
 	sf::View _view;
-	const sf::Input& _input;
 	ViewManager* _viewManager;
 	
 };

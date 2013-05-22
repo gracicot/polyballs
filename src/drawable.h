@@ -2,6 +2,7 @@
 #define DRAWABLE_H
 
 #include <SFML/Graphics.hpp>
+#include <GL/gl.h>
 
 class Drawable : public sf::Drawable
 {

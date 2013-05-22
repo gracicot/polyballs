@@ -19,15 +19,14 @@ int main(int argc, char **argv)
 	
 	myWindow.show();
 	
-	while (myWindow.IsOpened())
+	while (myWindow.isOpen())
     {
 		myWindow.redirectEvent();
         // Clear the screen (fill it with black color)
-        myWindow.Clear();
 		myWindow.render();
 		
         // Display window contents on screen
-        myWindow.Display();
+        myWindow.display();
     }
 	
     return 0;

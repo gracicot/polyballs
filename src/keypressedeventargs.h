@@ -8,14 +8,14 @@ class KeyPressedEventArgs : public EventArgs
 {
 
 public:
-    KeyPressedEventArgs(const sf::Key::Code key);
+    KeyPressedEventArgs(const sf::Keyboard::Key key);
     virtual ~KeyPressedEventArgs();
 	
-	sf::Key::Code getKey() const;
-	void setKey(const sf::Key::Code key);
+	sf::Keyboard::Key getKey() const;
+	void setKey(const sf::Keyboard::Key key);
 	
 private:
-	sf::Key::Code _key;
+	sf::Keyboard::Key _key;
 };
 
 #endif // KEYPRESSEDEVENTARGS_H
