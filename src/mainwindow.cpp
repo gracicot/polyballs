@@ -5,6 +5,7 @@
 
 MainWindow::MainWindow(): _viewManager(nullptr)
 {
+	glEnable(GL_TEXTURE_2D);
 	this->setView(_view);
 	this->setVerticalSyncEnabled(true);
 }
@@ -17,7 +18,7 @@ MainWindow::~MainWindow()
 void MainWindow::show()
 {
 	this->create(sf::VideoMode(1366, 900, 32), "Subgine test", sf::Style::Close | sf::Style::Titlebar | sf::Style::Resize);
-	_view.reset(sf::FloatRect(-1.0 * this->getSize().x / 2.0, -1.0 * this->getSize().y / 2.0, this->getSize().x / 2.0, this->getSize().y / 2.0));
+	_view.reset(sf::FloatRect(-0.5 * this->getSize().x, -0.5 * this->getSize().y, this->getSize().x / 2.0, this->getSize().y / 2.0));
 	this->setView(_view);
 	this->setKeyRepeatEnabled(false);
 }

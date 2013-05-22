@@ -11,7 +11,7 @@ file(GLOB_RECURSE SRC_FILES "src/*.cpp")
 add_executable(${EXECUTABLE_NAME} ${SRC_FILES})
 
 find_package(OpenGL REQUIRED)
-find_package(SFML 1.6 REQUIRED system window graphics network audio)
+find_package(SFML 2.0 REQUIRED system window graphics network audio)
 find_package(SUBGINE REQUIRED system physic collision)
 
 target_link_libraries(${EXECUTABLE_NAME} ${OPENGL_LIBRARIES} ${SFML_LIBRARIES} ${SUBGINE_LIBRARIES})

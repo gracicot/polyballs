@@ -48,7 +48,7 @@ void SpringDrawer::setSize(float size)
 	_size = size > 0 ? size : 0;
 }
 
-void SpringDrawer::Render(sf::RenderTarget& target) const
+void SpringDrawer::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	const Vector2 point = _object.getPosition();
 

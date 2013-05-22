@@ -22,7 +22,9 @@ int main(int argc, char **argv)
 	while (myWindow.isOpen())
     {
 		myWindow.redirectEvent();
+		
         // Clear the screen (fill it with black color)
+        myWindow.clear();
 		myWindow.render();
 		
         // Display window contents on screen

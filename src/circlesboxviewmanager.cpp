@@ -18,17 +18,17 @@ void CirclesBoxViewManager::render(sf::RenderTarget& taget) const
 {
 	if(_box != nullptr)
 	{
-		taget.Draw(*_box);
+		taget.draw(*_box);
 	}
 
 for(auto cicle : _circles)
 	{
-		taget.Draw(*cicle);
+		taget.draw(*cicle);
 	}
 
 	if(_spring != nullptr)
 	{
-		taget.Draw(*_spring);
+		taget.draw(*_spring);
 	}
 }
 

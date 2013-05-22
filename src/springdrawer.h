@@ -31,7 +31,7 @@ public:
 	SpringDrawer(const SpringDrawer& c);
 	virtual ~SpringDrawer();
 
-	virtual void Render(sf::RenderTarget& Target) const;
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 	float getSize();
 	void setSize(float size);
