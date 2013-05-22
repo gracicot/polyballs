@@ -10,7 +10,7 @@ public:
     BoxDrawer() = default;
     virtual ~BoxDrawer();
 	
-    virtual void Render(sf::RenderTarget& Target) const;
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	
 	virtual void setDimensions(Vector2 dimensions);
 	Vector2 getDimensions() const;

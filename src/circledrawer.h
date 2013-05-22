@@ -10,7 +10,7 @@ class CircleDrawer : public Drawable, virtual public Traits::Position, public vi
 public:
     CircleDrawer() = default;
     ~CircleDrawer() = default;
-    virtual void Render(sf::RenderTarget& Target) const;
+    virtual void draw(sf::RenderTarget& Target, sf::RenderStates states) const;
 
 	
 	sf::Color getColor() const;

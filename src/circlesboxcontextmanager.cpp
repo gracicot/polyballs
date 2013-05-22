@@ -5,6 +5,10 @@
 #include "box.h"
 #include "bounceinner.h"
 
+#include <stdio.h>      /* printf, NULL */
+#include <stdlib.h>     /* srand, rand */
+#include <time.h> 
+
 CirclesBoxContextManager::CirclesBoxContextManager(): _tempCircle(nullptr), _boxSpeed(0.2)
 {
 
@@ -27,6 +31,7 @@ CirclesBoxContextManager::CirclesBoxContextManager(): _tempCircle(nullptr), _box
 
 		collision->addTester(new SatTester, "box");
 	}
+	srand(time(NULL));
 
 	CircleObject* first = new CircleObject;
 	first->setRadius(75);
@@ -252,9 +257,9 @@ for(auto circles : _circles)
 				{
 					sf::Color sub_color = color;
 
-					sub_color.r = color.r - sf::Randomizer::Random(0, color.r);
-					sub_color.g = color.g - sf::Randomizer::Random(0, color.g);
-					sub_color.b = color.b - sf::Randomizer::Random(0, color.b);
+					sub_color.r = color.r - rand() % color.r;
+					sub_color.g = color.g - rand() % color.g;
+					sub_color.b = color.b - rand() % color.b;
 
 					color = sub_color;
 				}

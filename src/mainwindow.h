@@ -6,7 +6,7 @@
 #include "viewmanager.h"
 #include "contextmanager.h"
 
-class MainWindow : public sf::Window
+class MainWindow : public sf::RenderWindow
 {
 public:
     MainWindow();

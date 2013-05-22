@@ -1,6 +1,6 @@
 #include "circledrawer.h"
 
-void CircleDrawer::Render(sf::RenderTarget& Target) const
+void CircleDrawer::draw(sf::RenderTarget& Target, sf::RenderStates states) const
 {
     int num_segments = int(sqrt(_radius*24));
 

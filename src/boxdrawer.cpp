@@ -2,7 +2,7 @@
 
 #include "angle_helper.h"
 
-void BoxDrawer::Render(sf::RenderTarget& Target) const
+void BoxDrawer::draw(sf::RenderTarget& Target, sf::RenderStates states) const
 {
     glColor4ub(255, 255, 255, 255);
 	

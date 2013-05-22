@@ -99,11 +99,11 @@ void CirclesBoxEventManager::handleEvent(std::string eventType, const EventArgs*
 		{
 			switch(args->getKey())
 			{
-			case sf::Key::Add:
+			case sf::Keyboard::Key::Add:
 				_contextManager->setBoxSpeed(_contextManager->getBoxSpeed() + 0.05);
 				break;
 
-			case sf::Key::Subtract:
+			case sf::Keyboard::Key::Subtract:
 				_contextManager->setBoxSpeed(_contextManager->getBoxSpeed() - 0.05);
 				break;
 			}
